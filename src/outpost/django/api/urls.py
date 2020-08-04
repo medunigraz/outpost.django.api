@@ -1,3 +1,4 @@
+import django
 from importlib import import_module
 
 from django.apps import apps
@@ -6,6 +7,8 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
 from .schema import OpenAPIRenderer, SchemaGenerator
+
+app_name = "api"
 
 routers = {"v1": DefaultRouter()}
 
@@ -27,5 +30,5 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [url(r"^schema", schema_view, name="schema")] + [
-    url(f"^{v}/", include(r.urls, namespace=v)) for v, r in routers.items()
+    url(f"^{v}/", include((r.urls, v) if django.VERSION >= (2, 1) else r.urls, namespace=v)) for v, r in routers.items()
 ]

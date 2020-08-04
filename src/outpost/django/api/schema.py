@@ -1,8 +1,8 @@
 from collections import defaultdict
+from urllib.parse import urlparse
 
-from rest_framework.compat import urlparse
 from rest_framework.renderers import OpenAPIRenderer as BaseOpenAPIRenderer
-from rest_framework.schemas.generators import SchemaGenerator as BaseSchemaGenerator
+from rest_framework.schemas.generators import BaseSchemaGenerator
 
 
 class SchemaGenerator(BaseSchemaGenerator):
@@ -20,7 +20,7 @@ class OpenAPIRenderer(BaseOpenAPIRenderer):
 
         tag = None
         for name, link in document.links.items():
-            path = urlparse.urlparse(link.url).path
+            path = urlparse(link.url).path
             method = link.action.lower()
             paths.setdefault(path, {})
             paths[path][method] = self.get_operation(link, name, tag=tag)
@@ -32,7 +32,7 @@ class OpenAPIRenderer(BaseOpenAPIRenderer):
                 continue
 
             for name, link in section.links.items():
-                path = urlparse.urlparse(link.url).path
+                path = urlparse(link.url).path
                 method = link.action.lower()
                 paths.setdefault(path, {})
                 paths[path][method] = self.get_operation(link, name, tag=tag)
