@@ -1,8 +1,13 @@
+import rest_framework
 from collections import defaultdict
 from urllib.parse import urlparse
 
 from rest_framework.renderers import OpenAPIRenderer as BaseOpenAPIRenderer
-from rest_framework.schemas.generators import BaseSchemaGenerator
+
+if tuple(map(int, rest_framework.VERSION.split("."))) < (3, 11):
+    from rest_framework.schemas.generators import SchemaGenerator as BaseSchemaGenerator
+else:
+    from rest_framework.schemas.generators import BaseSchemaGenerator
 
 
 class SchemaGenerator(BaseSchemaGenerator):
