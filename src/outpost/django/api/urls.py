@@ -35,5 +35,9 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [url(r"^schema", schema_view, name="schema")] + [
-    url(f"^{v}/", include((r.urls, v) if django.VERSION >= (2, 1) else r.urls, namespace=v)) for v, r in routers.items()
+    url(
+        f"^{v}/",
+        include((r.urls, v) if django.VERSION >= (2, 1) else r.urls, namespace=v),
+    )
+    for v, r in routers.items()
 ]
