@@ -8,6 +8,7 @@ from django.core.files.base import ContentFile
 from drf_haystack.serializers import HaystackSerializer
 from rest_framework.serializers import FileField, IntegerField, SerializerMethodField
 
+from outpost.django.campusonline import search_indexes as campusonline
 from outpost.django.geo import search_indexes as geo
 from outpost.django.structure import search_indexes as structure
 
@@ -18,6 +19,9 @@ class AutocompleteSerializer(HaystackSerializer):
 
     class Meta:
         index_classes = [
+            campusonline.RoomIndex,
+            campusonline.PersonIndex,
+            campusonline.StudentIndex,
             geo.RoomIndex,
             structure.OrganizationIndex,
             structure.PersonIndex,
