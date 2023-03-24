@@ -24,6 +24,8 @@ class ExtendedDjangoObjectPermissions(DjangoObjectPermissions):
     }
 
     def has_permission(self, request, view):
+        if request.user.is_anonymous:
+            return False
         queryset = self._queryset(view)
         model_cls = queryset.model
         if super().has_permission(request, view):
