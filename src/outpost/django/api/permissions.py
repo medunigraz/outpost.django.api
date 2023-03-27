@@ -46,3 +46,15 @@ class ExtendedDjangoObjectPermissions(DjangoObjectPermissions):
             ).exists():
                 return True
         return False
+
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_anonymous:
+            return False
+        queryset = self._queryset(view)
+        model_cls = queryset.model
+        perms = self.get_required_object_permissions(request.method, model_cls)
+        if not perms:
+            return True
+        if request.user.has_perms(perms):
+            return True
+        return super().has_object_permission(request, view, obj)
