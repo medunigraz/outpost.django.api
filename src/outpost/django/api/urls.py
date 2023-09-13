@@ -27,14 +27,14 @@ for app in sorted(apps.get_app_configs(), key=lambda app: app.label):
         logger.warn(f"Failed to import endpoints from {app.name}")
         pass
 
-schema_view = get_schema_view(
-    title="Medical University of Graz - API",
-    urlconf="outpost.django.api.urls",
-    generator_class=SchemaGenerator,
-    renderer_classes=[OpenAPIRenderer],
-)
+# schema_view = get_schema_view(
+#    title="Medical University of Graz - API",
+#    urlconf="outpost.django.api.urls",
+#    generator_class=SchemaGenerator,
+#    renderer_classes=[OpenAPIRenderer],
+# )
 
-urlpatterns = [url(r"^schema", schema_view, name="schema")] + [
+urlpatterns = [url(r"^schema", SpectacularAPIView.as_view(), name="schema")] + [
     url(
         f"^{v}/",
         include((r.urls, v) if django.VERSION >= (2, 1) else r.urls, namespace=v),
