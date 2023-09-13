@@ -1,13 +1,20 @@
 import logging
-import django
 from importlib import import_module
 
+import django
 from django.apps import apps
-from django.conf.urls import include, url
+from django.conf.urls import (
+    include,
+    url,
+)
+from drf_spectacular.views import SpectacularAPIView
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
-from .schema import OpenAPIRenderer, SchemaGenerator
+from .schema import (
+    OpenAPIRenderer,
+    SchemaGenerator,
+)
 
 app_name = "api"
 
