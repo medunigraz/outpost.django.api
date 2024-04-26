@@ -17,22 +17,24 @@ from .schema import (
 )
 
 app_name = "api"
+path = r"^"
 
 logger = logging.getLogger(__name__)
 routers = {"v1": DefaultRouter()}
 
 for app in sorted(apps.get_app_configs(), key=lambda app: app.label):
+    if not app.name.startswith("outpost.django."):
+        continue
+    logger.debug(f"Importing endpoints from {app.name}")
     try:
-        logger.debug(f"Importing endpoints from {app.name}")
         module = import_module(f"{app.name}.endpoints")
-        for version, router in routers.items():
-            endpoints = getattr(module, version, [])
-            for endpoint in sorted(endpoints, key=lambda e: e[0]):
-                logger.debug(f"Registering API endpoint {endpoint}")
-                router.register(*endpoint)
-    except Exception:
-        logger.warn(f"Failed to import endpoints from {app.name}")
-        pass
+    except ModuleNotFoundError:
+        continue
+    for version, router in routers.items():
+        endpoints = getattr(module, version, [])
+        for endpoint in sorted(endpoints, key=lambda e: e[0]):
+            logger.debug(f"Registering API endpoint {endpoint}")
+            router.register(*endpoint)
 
 # schema_view = get_schema_view(
 #    title="Medical University of Graz - API",

@@ -6,8 +6,7 @@ from rest_framework.utils.representation import smart_repr
 
 
 class EntryThrottleValidator(object):
-    """
-    """
+    """"""
 
     def __init__(self, queryset, search, field, delta):
         self.queryset = queryset

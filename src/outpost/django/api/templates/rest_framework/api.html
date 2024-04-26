@@ -12,37 +12,44 @@
 {% endblock %}
 
 {% block content %}
+
   {% block breadcrumbs %}
-    <ul class="breadcrumb">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
       {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
-        {% if forloop.last %}
-          <li class="active"><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
-        {% else %}
-          <li><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
-        {% endif %}
+      <li class="breadcrumb-item{% if forloop.last %} active{% endif %}">
+        <a href="{{ breadcrumb_url }}">
+          {% if forloop.first %}
+          <i class="fa fa-home" aria-hidden="true"></i>
+          {% endif %}
+          {{ breadcrumb_name }}
+        </a>
+      </li>
       {% endfor %}
-    </ul>
+    </ol>
+  </nav>
   {% endblock %}
 
-  <!-- Content -->
   <div id="content">
     {% if 'GET' in allowed_methods %}
       <form id="get-form" class="pull-right">
         <fieldset>
           {% if api_settings.URL_FORMAT_OVERRIDE %}
             <div class="btn-group format-selection">
-              <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Make a GET request on the {{ name }} resource">GET</a>
-
+              <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Make a GET request on the {{ name }} resource">
+                <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                GET
+              </a>
               <button class="btn btn-primary dropdown-toggle js-tooltip" data-toggle="dropdown" title="Specify a format for the GET request">
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu">
+              <div class="dropdown-menu">
                 {% for format in available_formats %}
-                  <li>
-                    <a class="js-tooltip format-option" href="{% add_query_param request api_settings.URL_FORMAT_OVERRIDE format %}" rel="nofollow" title="Make a GET request on the {{ name }} resource with the format set to `{{ format }}`">{{ format }}</a>
-                  </li>
+                  <a class="dropdown-item js-tooltip format-option" href="{% add_query_param request api_settings.URL_FORMAT_OVERRIDE format %}" rel="nofollow" title="Make a GET request on the {{ name }} resource with the format set to `{{ format }}`">
+                    {{ format }}
+                  </a>
                 {% endfor %}
-              </ul>
+              </div>
             </div>
           {% else %}
             <a class="btn btn-primary js-tooltip" href="{{ request.get_full_path }}" rel="nofollow" title="Make a GET request on the {{ name }} resource">GET</a>
@@ -53,7 +60,10 @@
 
     {% if options_form %}
       <form class="button-form" action="{{ request.get_full_path }}" data-method="OPTIONS">
-        <button class="btn btn-primary js-tooltip" title="Make an OPTIONS request on the {{ name }} resource">OPTIONS</button>
+        <button class="btn btn-primary js-tooltip" title="Make an OPTIONS request on the {{ name }} resource">
+          <i class="fa fa-cogs" aria-hidden="true"></i>
+          OPTIONS
+        </button>
       </form>
     {% endif %}
 
@@ -78,8 +88,8 @@
     {% endif %}
 
     {% if filter_form %}
-      <button style="float: right; margin-right: 10px" data-toggle="modal" data-target="#filtersModal" class="btn btn-default">
-        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+      <button style="float: right; margin-right: 10px" data-toggle="modal" data-target="#filtersModal" class="btn btn-secondary">
+        <i class="fa fa-filter" aria-hidden="true"></i>
         {% trans "Filters" %}
       </button>
     {% endif %}

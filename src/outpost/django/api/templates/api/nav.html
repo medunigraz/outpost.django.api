@@ -1,15 +1,17 @@
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-    <span class="glyphicon glyphicon-link"></span>
-    API
-    <span class="caret"></span>
+{% load i18n %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_api" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-database" aria-hidden="true"></i>
+    {% trans "API" %}
   </a>
-  <ul class="dropdown-menu">
-    <li>
-      <a href="{% url 'api:schema' %}">Schema</a>
-    </li>
-    <li>
-      <a href="{% url 'api:v1:api-root' %}">Version 1</a>
-    </li>
-  </ul>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown_api">
+    <a class="dropdown-item" href="{% url 'api:schema' %}">
+      <i class="fa fa-code" aria-hidden="true"></i>
+      {% trans "Schema" %}
+    </a>
+    <a class="dropdown-item" href="{% url 'api:v1:api-root' %}">
+      <i class="fa fa-tasks" aria-hidden="true"></i>
+      {% trans "Version 1" %}
+    </a>
+  </div>
 </li>

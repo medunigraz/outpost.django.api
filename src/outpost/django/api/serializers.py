@@ -1,16 +1,22 @@
 import re
-from base64 import b64decode, urlsafe_b64encode
+from base64 import (
+    b64decode,
+    urlsafe_b64encode,
+)
 from pathlib import PurePosixPath
 from uuid import uuid4
 
 import six
 from django.core.files.base import ContentFile
 from drf_haystack.serializers import HaystackSerializer
-from rest_framework.serializers import FileField, IntegerField, SerializerMethodField
-
 from outpost.django.campusonline import search_indexes as campusonline
 from outpost.django.geo import search_indexes as geo
 from outpost.django.structure import search_indexes as structure
+from rest_framework.serializers import (
+    FileField,
+    IntegerField,
+    SerializerMethodField,
+)
 
 
 class AutocompleteSerializer(HaystackSerializer):

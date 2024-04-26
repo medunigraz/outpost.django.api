@@ -1,11 +1,10 @@
 from drf_haystack.filters import HaystackAutocompleteFilter
 from drf_haystack.viewsets import HaystackViewSet
-from rest_framework.permissions import AllowAny
-from xapian_backend import NGRAM_MAX_LENGTH
-
 from outpost.django.campusonline import models as campusonline
 from outpost.django.geo import models as geo
 from outpost.django.structure import models as structure
+from rest_framework.permissions import AllowAny
+from xapian_backend import NGRAM_MAX_LENGTH
 
 from . import serializers
 
@@ -48,7 +47,14 @@ class AutocompleteViewSet(HaystackViewSet):
     """
 
     serializer_class = serializers.AutocompleteSerializer
-    index_models = (geo.Room, structure.Organization, structure.Person, campusonline.Person, campusonline.Room, campusonline.Student)
+    index_models = (
+        geo.Room,
+        structure.Organization,
+        structure.Person,
+        campusonline.Person,
+        campusonline.Room,
+        campusonline.Student,
+    )
     permission_classes = (AllowAny,)
     filter_backends = (LimitingHaystackAutocompleteFilter,)
 
