@@ -17,7 +17,7 @@ from .schema import (
 )
 
 app_name = "api"
-path = r"^"
+BASE_PATH = r"^"
 
 logger = logging.getLogger(__name__)
 routers = {"v1": DefaultRouter()}
