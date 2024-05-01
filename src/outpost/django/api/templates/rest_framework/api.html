@@ -59,7 +59,7 @@
     {% endif %}
 
     {% if options_form %}
-      <form class="button-form" action="{{ request.get_full_path }}" data-method="OPTIONS">
+      <form class="pull-right mr-1" action="{{ request.get_full_path }}" data-method="OPTIONS">
         <button class="btn btn-primary js-tooltip" title="Make an OPTIONS request on the {{ name }} resource">
           <i class="fa fa-cogs" aria-hidden="true"></i>
           OPTIONS
@@ -88,7 +88,7 @@
     {% endif %}
 
     {% if filter_form %}
-      <button style="float: right; margin-right: 10px" data-toggle="modal" data-target="#filtersModal" class="btn btn-secondary">
+      <button data-toggle="modal" data-target="#filtersModal" class="btn btn-secondary float-right mr-1">
         <i class="fa fa-filter" aria-hidden="true"></i>
         {% trans "Filters" %}
       </button>
@@ -98,16 +98,14 @@
         <div class="page-header">
           <h1>{{ name }}</h1>
         </div>
-        <div style="float:left">
+        <div>
           {% block description %}
             {{ description }}
           {% endblock %}
         </div>
 
         {% if paginator %}
-          <nav style="float: right">
             {% get_pagination_html paginator %}
-          </nav>
         {% endif %}
 
         <div class="request-info" style="clear: both" >

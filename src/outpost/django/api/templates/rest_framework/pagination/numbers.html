@@ -1,6 +1,6 @@
 {% load i18n %}
-<nav aria-label="{% trans "Pagination" %}">
-  <ul class="pagination" id="pagination">
+<nav aria-label="{% trans "Pagination" %}" class="border p-1 mb-1">
+  <ul class="pagination ustify-content-center m-0" id="pagination">
     <li class="page-item{% if not previous_url %} disabled{% endif %}">
       <a class="page-link" href="{% if previous_url %}{{ previous_url }}{% endif %}#pagination">
         {% trans "Previous" %}
