@@ -3,9 +3,9 @@ from importlib import import_module
 
 import django
 from django.apps import apps
-from django.conf.urls import (
+from django.urls import (
     include,
-    url,
+    path,
 )
 from drf_spectacular.views import SpectacularAPIView
 from rest_framework.routers import DefaultRouter
@@ -17,7 +17,7 @@ from .schema import (
 )
 
 app_name = "api"
-BASE_PATH = r"^"
+BASE_PATH = ""
 
 logger = logging.getLogger(__name__)
 routers = {"v1": DefaultRouter()}
@@ -43,9 +43,9 @@ for app in sorted(apps.get_app_configs(), key=lambda app: app.label):
 #    renderer_classes=[OpenAPIRenderer],
 # )
 
-urlpatterns = [url(r"^schema", SpectacularAPIView.as_view(), name="schema")] + [
-    url(
-        f"^{v}/",
+urlpatterns = [path("schema", SpectacularAPIView.as_view(), name="schema")] + [
+    path(
+        f"{v}/",
         include((r.urls, v) if django.VERSION >= (2, 1) else r.urls, namespace=v),
     )
     for v, r in routers.items()
