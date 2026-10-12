@@ -53,15 +53,30 @@ class AutocompleteViewSet(HaystackViewSet):
         campusonline.Person,
         campusonline.Room,
     )
+    authenticated_index_models = (campusonline.Student,)
     permission_classes = (AllowAny,)
     filter_backends = (LimitingHaystackAutocompleteFilter,)
 
     def get_queryset(self, index_models=[]):
         queryset = self.object_class()._clone()
         if "m" in self.request.GET:
-            allowed = self.request.GET.get("m").split(",")
-            models = filter(lambda m: m._meta.label in allowed, self.index_models)
-            queryset = queryset.models(*models)
-        else:
-            queryset = queryset.models(*self.index_models)
-        return queryset
+            requested = self.request.GET.get("m").split(",")
+            # Filter all requested index models and check if they require
+            # authentication
+            models = list(
+                filter(lambda m: m._meta.label in requested, self.index_models)
+            ) + list(
+                filter(
+                    lambda m: self.request.user.is_authenticated
+                    and m._meta.label in requested,
+                    self.authenticated_index_models,
+                )
+            )
+            if models:
+                return queryset.models(*models)
+            else:
+                # No index models were allowed, so return empty result.
+                return queryset.none()
+
+        # Only return public index models if none were requested.
+        return queryset.models(*self.index_models)
