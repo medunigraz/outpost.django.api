@@ -19,7 +19,7 @@ class ExtendedMetadata(SimpleMetadata):
 
 
 def build_mock_request(method, path, view, original_request, **kwargs):
-    """ build a mocked request and use original request as reference if available """
+    """build a mocked request and use original request as reference if available"""
     request = getattr(
         APIRequestFactory(),
         method.lower(),
