@@ -27,7 +27,6 @@ class AutocompleteSerializer(HaystackSerializer):
         index_classes = [
             campusonline.RoomIndex,
             campusonline.PersonIndex,
-            campusonline.StudentIndex,
             geo.RoomIndex,
             structure.OrganizationIndex,
             structure.PersonIndex,

@@ -37,7 +37,6 @@ class AutocompleteViewSet(HaystackViewSet):
 
      * `campusonline.Person`
      * `campusonline.Room`
-     * `campusonline.Student`
      * `geo.Room`
      * `structure.Organization`
      * `structure.Person`
@@ -53,7 +52,6 @@ class AutocompleteViewSet(HaystackViewSet):
         structure.Person,
         campusonline.Person,
         campusonline.Room,
-        campusonline.Student,
     )
     permission_classes = (AllowAny,)
     filter_backends = (LimitingHaystackAutocompleteFilter,)
