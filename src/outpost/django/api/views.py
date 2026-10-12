@@ -59,6 +59,11 @@ class AutocompleteViewSet(HaystackViewSet):
 
     def get_queryset(self, index_models=[]):
         queryset = self.object_class()._clone()
+        query = self.request.GET.get("q")
+        if not query:
+            return queryset.none()
+        if len(query) < 3:
+            return queryset.none()
         if "m" in self.request.GET:
             requested = self.request.GET.get("m").split(",")
             # Filter all requested index models and check if they require
